@@ -1,20 +1,10 @@
-# Ambientes Virtuais
 venv/
 .venv/
-env/
-ENV/
-
-# Python Cache e Bytecodes
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
-
-# Arquivos de IDEs e Editores
 .vscode/
 .idea/
-*.swp
-
-# Logs e arquivos temporários
 *.log
 .DS_Store

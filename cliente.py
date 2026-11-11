@@ -39,7 +39,7 @@ class ModbusClientHelper:
         res = self.client.write_coil(address, value)
         return not res.isError()
 
-    # --- LEITURA E ESCRITA DE HOLDING REGISTERS (INTEIROS) ---
+    # --- LEITURA E ESCRITA DE HOLDING REGISTERS ---
     def read_holding_registers(self, address: int, count: int = 1):
         if not self.is_connected():
             return None
@@ -62,7 +62,6 @@ class ModbusClientHelper:
         byte_order=Endian.BIG,
         div: float = 1.0,
     ):
-        """Lê float32 (2 registradores) e aplica a escala eng = valor / div."""
         registers = self.read_holding_registers(address, 2)
         if not registers:
             return None
@@ -80,7 +79,6 @@ class ModbusClientHelper:
         byte_order=Endian.BIG,
         div: float = 1.0,
     ) -> bool:
-        """Aplica a escala enviada (num = eng * div) e escreve float32 em 2 registradores."""
         val_scaled = float(value) * div
         builder = BinaryPayloadBuilder(
             byteorder=byte_order, wordorder=word_order
@@ -92,9 +90,8 @@ class ModbusClientHelper:
         res = self.client.write_registers(address, payload)
         return not res.isError()
 
-    # --- MANIPULAÇÃO DE BITS EM UM REGISTRADOR (16 bits) ---
+    # --- BITS EM REGISTRADOR DE 16 BITS ---
     def read_bits_from_register(self, address: int):
-        """Retorna uma lista de 16 booleanos referentes aos bits de um Holding Register [0..15]."""
         regs = self.read_holding_registers(address, 1)
         if not regs:
             return None
@@ -104,18 +101,14 @@ class ModbusClientHelper:
     def write_bit_in_register(
         self, address: int, bit_index: int, bit_value: int
     ) -> bool:
-        """Altera um bit específico (0-15) de um registrador mantendo os demais preservados."""
         if not (0 <= bit_index <= 15) or bit_value not in (0, 1):
             return False
-
         regs = self.read_holding_registers(address, 1)
         if not regs:
             return False
-
         current_val = regs[0]
         if bit_value == 1:
             new_val = current_val | (1 << bit_index)
         else:
             new_val = current_val & ~(1 << bit_index)
-
         return self.write_holding_register(address, new_val)

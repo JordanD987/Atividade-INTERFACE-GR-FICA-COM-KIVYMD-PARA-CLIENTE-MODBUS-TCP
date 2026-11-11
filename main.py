@@ -1,10 +1,4 @@
-import sys
-from pathlib import Path
-
-# Adiciona diretório raiz ao path para importar a classe cliente
-sys.path.append(str(Path(__file__).resolve().parent.parent))
-
-from cliente.cliente_modbus import ModbusClientHelper
+from cliente import ModbusClientHelper
 from kivy.clock import Clock
 from kivy.lang import Builder
 from kivymd.app import MDApp
@@ -25,7 +19,6 @@ MDBoxLayout:
         size_hint_y: None
         height: self.texture_size[1]
 
-    # Conexão
     MDBoxLayout:
         spacing: 8
         size_hint_y: None
@@ -45,7 +38,6 @@ MDBoxLayout:
                 id: btn_connect_text
                 text: "Conectar"
 
-    # Seleção de Tipo e Modos
     MDBoxLayout:
         spacing: 8
         size_hint_y: None
@@ -78,7 +70,6 @@ MDBoxLayout:
         size_hint_y: None
         height: "20dp"
 
-    # Parâmetros de Leitura/Escrita
     MDBoxLayout:
         spacing: 8
         size_hint_y: None
@@ -96,7 +87,6 @@ MDBoxLayout:
             text: "0"
             hint_text: "Valor p/ Escrita"
 
-    # Opções e Ações
     MDBoxLayout:
         spacing: 8
         size_hint_y: None
@@ -118,7 +108,6 @@ MDBoxLayout:
             MDButtonText:
                 text: "Escrever"
 
-    # Monitor de Resposta
     MDLabel:
         text: "Resultado:"
         bold: True
