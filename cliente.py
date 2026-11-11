@@ -1,4 +1,4 @@
-from pymodbus.client import ModbusTcpClient
+from pymodbus.client.sync import ModbusTcpClient
 from pymodbus.constants import Endian
 from pymodbus.payload import BinaryPayloadBuilder, BinaryPayloadDecoder
 
@@ -20,7 +20,7 @@ class ModbusClientHelper:
             self.client = None
 
     def is_connected(self) -> bool:
-        return self.client is not None and self.client.is_socket_open()
+        return self.client is not None and self.client.socket is not None
 
     def read_coils(self, address: int, count: int = 1):
         if not self.is_connected():
@@ -53,8 +53,8 @@ class ModbusClientHelper:
     def read_float(
         self,
         address: int,
-        word_order=Endian.BIG,
-        byte_order=Endian.BIG,
+        word_order=Endian.Big,
+        byte_order=Endian.Big,
         div: float = 1.0,
     ):
         registers = self.read_holding_registers(address, 2)
@@ -70,8 +70,8 @@ class ModbusClientHelper:
         self,
         address: int,
         value: float,
-        word_order=Endian.BIG,
-        byte_order=Endian.BIG,
+        word_order=Endian.Big,
+        byte_order=Endian.Big,
         div: float = 1.0,
     ) -> bool:
         val_scaled = float(value) * div
