@@ -5,9 +5,6 @@ from cliente import ModbusClientHelper
 from kivy.clock import Clock
 from kivy.lang import Builder
 from kivymd.app import MDApp
-from kivymd.uix.button import MDButton, MDButtonText
-from kivymd.uix.selectioncontrol import MDCheckbox
-from kivymd.uix.textfield import MDTextField
 
 KV = """
 MDBoxLayout:
@@ -34,12 +31,10 @@ MDBoxLayout:
             id: txt_port
             text: "502"
             hint_text: "Porta"
-        MDButton:
+        MDRaisedButton:
             id: btn_connect
+            text: "Conectar"
             on_release: app.toggle_connection()
-            MDButtonText:
-                id: btn_connect_text
-                text: "Conectar"
 
     MDBoxLayout:
         spacing: 8
@@ -49,22 +44,18 @@ MDBoxLayout:
             text: "Tipo de Dado:"
             size_hint_x: None
             width: "100dp"
-        MDButton:
+        MDRaisedButton:
+            text: "Holding Reg"
             on_release: app.set_data_type("Holding Register")
-            MDButtonText:
-                text: "Holding Reg"
-        MDButton:
+        MDRaisedButton:
+            text: "Float32"
             on_release: app.set_data_type("Float")
-            MDButtonText:
-                text: "Float32"
-        MDButton:
+        MDRaisedButton:
+            text: "Coil"
             on_release: app.set_data_type("Coil")
-            MDButtonText:
-                text: "Coil"
-        MDButton:
+        MDRaisedButton:
+            text: "Bit no Reg"
             on_release: app.set_data_type("Bit")
-            MDButtonText:
-                text: "Bit no Reg"
 
     MDLabel:
         id: lbl_selected_type
@@ -102,14 +93,12 @@ MDBoxLayout:
         MDLabel:
             text: "Leitura Recorrente (1s)"
             valign: "center"
-        MDButton:
+        MDRaisedButton:
+            text: "Ler"
             on_release: app.read_data()
-            MDButtonText:
-                text: "Ler"
-        MDButton:
+        MDRaisedButton:
+            text: "Escrever"
             on_release: app.write_data()
-            MDButtonText:
-                text: "Escrever"
 
     MDLabel:
         text: "Resultado:"
@@ -144,7 +133,7 @@ class ModbusApp(MDApp):
             self.modbus.host = ip
             self.modbus.port = port
             if self.modbus.connect():
-                self.root.ids.btn_connect_text.text = "Desconectar"
+                self.root.ids.btn_connect.text = "Desconectar"
                 self.root.ids.lbl_result.text = (
                     f"Conectado com sucesso em {ip}:{port}"
                 )
@@ -152,7 +141,7 @@ class ModbusApp(MDApp):
                 self.root.ids.lbl_result.text = "Falha ao conectar no servidor!"
         else:
             self.modbus.disconnect()
-            self.root.ids.btn_connect_text.text = "Conectar"
+            self.root.ids.btn_connect.text = "Conectar"
             self.root.ids.lbl_result.text = "Desconectado."
             if self.clock_event:
                 self.clock_event.cancel()
