@@ -1,3 +1,6 @@
+import os 
+os.environ['KIVY_GL_BACKEND'] = 'angle_sdl2'
+
 from cliente import ModbusClientHelper
 from kivy.clock import Clock
 from kivy.lang import Builder
