@@ -185,9 +185,7 @@ class ModbusApp(MDApp):
                 self.root.ids.lbl_result.text = f"Coil [{addr}]: {val}"
             elif self.current_type == "Bit":
                 bits = self.modbus.read_bits_from_register(addr)
-                self.root.ids.lbl_result.text = (
-                    f"Bits Reg [{addr}]: {bits}"
-                )
+                self.root.ids.lbl_result.text = f"Bits Reg [{addr}]: {bits}"
         except Exception as e:
             self.root.ids.lbl_result.text = f"Erro de Leitura: {str(e)}"
 

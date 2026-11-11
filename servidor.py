@@ -25,8 +25,6 @@ def decode_float(registers: list) -> float:
 
 
 def simular_clp():
-    """Thread background para atualizar as 10 medições simuladas."""
-    # Inicializa Setpoint = 50.0 e Habilita (1328 bit 6) = 1
     data_bank.set_holding_registers(1302, encode_float(50.0))
     data_bank.set_holding_registers(1328, [1 << 6])
 

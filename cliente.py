@@ -11,12 +11,10 @@ class ModbusClientHelper:
         self.client = None
 
     def connect(self) -> bool:
-        """Abre a conexão com o servidor Modbus TCP."""
         self.client = ModbusTcpClient(self.host, port=self.port)
         return self.client.connect()
 
     def disconnect(self):
-        """Fecha a conexão Modbus TCP."""
         if self.client:
             self.client.close()
             self.client = None
@@ -24,7 +22,6 @@ class ModbusClientHelper:
     def is_connected(self) -> bool:
         return self.client is not None and self.client.is_socket_open()
 
-    # --- LEITURA E ESCRITA DE COILS ---
     def read_coils(self, address: int, count: int = 1):
         if not self.is_connected():
             return None
@@ -39,7 +36,6 @@ class ModbusClientHelper:
         res = self.client.write_coil(address, value)
         return not res.isError()
 
-    # --- LEITURA E ESCRITA DE HOLDING REGISTERS ---
     def read_holding_registers(self, address: int, count: int = 1):
         if not self.is_connected():
             return None
@@ -54,7 +50,6 @@ class ModbusClientHelper:
         res = self.client.write_register(address, int(value))
         return not res.isError()
 
-    # --- LEITURA E ESCRITA DE FLOATS (32-bit em 2 registradores) ---
     def read_float(
         self,
         address: int,
@@ -90,7 +85,6 @@ class ModbusClientHelper:
         res = self.client.write_registers(address, payload)
         return not res.isError()
 
-    # --- BITS EM REGISTRADOR DE 16 BITS ---
     def read_bits_from_register(self, address: int):
         regs = self.read_holding_registers(address, 1)
         if not regs:

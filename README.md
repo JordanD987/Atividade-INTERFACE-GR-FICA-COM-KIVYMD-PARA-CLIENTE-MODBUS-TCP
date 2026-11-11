@@ -1,8 +1,8 @@
 # ENE118 - Comunicação Industrial & Supervisório Modbus TCP (KivyMD)
 
-## Integrantes
-* **Integrante 1**: Desenvolvimento da classe de comunicação Modbus (`cliente.py`).
-* **Integrante 2**: Implementação da interface gráfica (`main.py`) e do servidor de emulação (`servidor.py`).
+
+ Desenvolvimento da classe de comunicação Modbus (`cliente.py`).
+ Implementação da interface gráfica (`main.py`) e do servidor de emulação (`servidor.py`).
 
 ---
 
